@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,7 +201,7 @@
     <!-- Page 3: Birthday Wishes -->
     <div class="page" id="page3">
         <h1>Happy Birthday Ansa!</h1>
-        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d0d8f0ba-9957-46d3-a8de-72e5d4eef580.png" alt="Birthday celebration with balloons, cake and gifts in pink theme" class="birthday-image">
+        <img src="https://placehold.co/600x400/ffebee/d81b60" alt="Birthday celebration with balloons, cake and gifts in pink theme" class="birthday-image">
         <p>Wishing you the most wonderful birthday filled with joy, laughter, and all the happiness you deserve!</p>
         <p>May this year bring you success in all your endeavors and shower you with love and prosperity.</p>
         <button class="btn" onclick="nextPage()">NEXT</button>
@@ -266,4 +267,69 @@
         
         function nextPage() {
             document.getElementById(`page${currentPage}`).classList.remove('active-page');
-            current
+            currentPage = currentPage < totalPages ? currentPage + 1 : 1;
+            document.getElementById(`page${currentPage}`).classList.add('active-page');
+            
+            if(currentPage === 3) {
+                // Create heart animation on birthday page
+                setInterval(createHearts, 500);
+                setTimeout(() => {
+                    const interval = setInterval(createHearts, 500);
+                    setTimeout(() => clearInterval(interval), 5000);
+                }, 1000);
+            }
+        }
+        
+        function restart() {
+            document.getElementById(`page${currentPage}`).classList.remove('active-page');
+            currentPage = 1;
+            document.getElementById(`page${currentPage}`).classList.add('active-page');
+        }
+        
+        function moveNoButton() {
+            const noBtn = document.getElementById('no-btn');
+            const maxX = Math.max(window.innerWidth - noBtn.offsetWidth - 20, 0);
+            const maxY = Math.max(window.innerHeight - noBtn.offsetHeight - 20, 0);
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            createHearts();
+        }
+        
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤';
+            heart.classList.add('heart');
+            
+            // Random position
+            const xPos = Math.random() * window.innerWidth;
+            heart.style.left = xPos + 'px';
+            heart.style.bottom = '-50px';
+            
+            // Random size
+            const size = Math.random() * 20 + 20;
+            heart.style.fontSize = size + 'px';
+            
+            // Random color
+            const colors = ['#ff0000', '#ff1493', '#ff69b4', '#ff00ff', '#d81b60'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.color = randomColor;
+            
+            heartsContainer.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
+
